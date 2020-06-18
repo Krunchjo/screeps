@@ -4,7 +4,7 @@ let roomManagerEnergySource = require('room_manager_energy_sources');
 
 module.exports.loop = function () {
     for (let room in Game.rooms) {
-        roomManagerEnergySource.manageRoomEnergy(room);
+        roomManagerEnergySource.manageRoomEnergy(Game.rooms[room]);
         creepController.run(Game.rooms[room]);
         spawnController.run(Game.rooms[room]);
     }

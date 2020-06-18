@@ -17,7 +17,9 @@ module.exports = {
             }
         }
 
-        creepControllerWorker.manageWorkers(room, harvester);
+        if (harvester.length > 0) {
+            creepControllerWorker.manageWorkers(room, harvester);
+        }
 
         for (let key in creeps) {
             creepTaskManager.run(creeps[key], room);

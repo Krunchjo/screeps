@@ -1,6 +1,4 @@
-let helper = require('helper');
 let tasks = require('tasks');
-let roomManagerEnergySources = require('room_manager_energy_sources')
 
 module.exports = {
     manageWorkers(room, creeps) {

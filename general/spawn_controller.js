@@ -9,7 +9,7 @@ module.exports = {
             const spawn = spawns[key];
 
             if (spawn.store[RESOURCE_ENERGY] > 100) {
-                if (helper.countObjectProps(Game.creeps) < module.exports.MAX_NUMBER) {
+                if (helper.countObjectProps(Game.creeps) < module.exports.MAX_NUMBER_WORKERS) {
                     spawn.spawnCreep([WORK, CARRY, MOVE], 'creep' + Game.time, {
                         memory: {role: roles.ROLE_WORKER}
                     });

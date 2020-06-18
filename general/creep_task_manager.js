@@ -1,5 +1,5 @@
 let tasks = require('tasks');
-let creepTaskHarvest = require('general/creep_task_harvest');
+let creepTaskHarvest = require('creep_task_harvest');
 let creepTaskBuild = require('creep_task_build')
 
 module.exports = {
