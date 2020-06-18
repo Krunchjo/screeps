@@ -16,7 +16,7 @@ module.exports = {
         strokeWidth: .15,
         opacity: .1
     },
-    run(creep) {
+    run(creep, room) {
         if (    creep.memory.task !== undefined
              && creep.memory.task.type === tasks.TASK_HARVEST
         ) {

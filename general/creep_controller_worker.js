@@ -17,7 +17,7 @@ module.exports = {
                 let targetBuilder = remainingCreeps.slice(0, neededBuilders);
                 remainingCreeps = remainingCreeps.slice(neededBuilders + 1, remainingCreeps.length);
 
-                for (key in targetBuilder) {
+                for (let key in targetBuilder) {
                     let currentTargetBuilder = targetBuilder[key];
                     currentTargetBuilder.memory.task = {
                         type: tasks.TASK_BUILD,
@@ -26,6 +26,7 @@ module.exports = {
                 }
             }
         }
+        return remainingCreeps;
     },
     manageHarvester(room, creeps) {
         let remainingCreeps = creeps;
