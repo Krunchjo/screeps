@@ -3,13 +3,13 @@ let creepTaskHarvest = require('general/creep_task_harvest');
 let creepTaskBuild = require('creep_task_build')
 
 module.exports = {
-    run(creep) {
+    run(creep, room) {
         switch (creep.memory.task.type) {
             case tasks.TASK_BUILD :
-                creepTaskBuild.run(creep);
+                creepTaskBuild.run(creep, room);
                 break
             case tasks.TASK_HARVEST:
-                creepTaskHarvest.run(creep);
+                creepTaskHarvest.run(creep, room);
             default:
                 return;
         }

@@ -1,5 +1,6 @@
 let helper = require('helper');
 let tasks = require('tasks');
+let roomManagerEnergySources = require('room_manager_energy_sources')
 
 module.exports = {
     manageWorkers(room, creeps) {
@@ -15,8 +16,8 @@ module.exports = {
             for (let key in buildingTargets) {
                 let target = buildingTargets[key];
                 let neededBuilders = 1;
-                let targetBuilder = remainingCreeps.split(0, neededBuilders);
-                remainingCreeps = remainingCreeps.split(neededBuilders, remainingCreeps.length);
+                let targetBuilder = remainingCreeps.slice(0, neededBuilders);
+                remainingCreeps = remainingCreeps.slice(neededBuilders + 1, remainingCreeps.length);
 
                 for (key in targetBuilder) {
                     let currentTargetBuilder = targetBuilder[key];
@@ -29,19 +30,18 @@ module.exports = {
         }
     },
     manageHarvester(room, creeps) {
-        let resources = room.find(FIND_SOURCES);
-        let resNumber = resources.length;
+        let remainingCreeps = creeps;
+        let numberOfHarvester = 2;
 
-        if (resNumber > 0) {
-            let creepChunks = helper.chunkArray(creeps, creeps.length / resNumber);
-            for (let i = 0; i < resNumber; i++) {
-                for (let key in creepChunks[i]) {
-                    creepChunks[i][key].memory.task = {
-                        type: tasks.TASK_HARVEST,
-                        target: resources[i]
-                    };
-                }
+        let harvesters = remainingCreeps.slice(0, numberOfHarvester);
+        remainingCreeps = remainingCreeps.slice(numberOfHarvester + 1, remainingCreeps.length);
+
+        for (let key in harvesters) {
+            let harvester = harvesters[key];
+            harvester.memory.task = {
+                type: tasks.TASK_HARVEST
             }
         }
+        return remainingCreeps;
     }
 }

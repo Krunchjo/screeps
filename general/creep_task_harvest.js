@@ -1,4 +1,5 @@
 let tasks = require('tasks');
+let roomManagerEnergySource = require('room_manager_energy_sources');
 
 module.exports = {
     HARVEST_STYLE: {
@@ -19,6 +20,7 @@ module.exports = {
         if (    creep.memory.task !== undefined
              && creep.memory.task.type === tasks.TASK_HARVEST
         ) {
+            let source = roomManagerEnergySource.findEnergy(room);
             if(creep.store.getFreeCapacity() > 0) {
                 if(creep.harvest(source) === ERR_NOT_IN_RANGE) {
                     creep.moveTo(source, {visualizePathStyle: module.exports.HARVEST_STYLE});

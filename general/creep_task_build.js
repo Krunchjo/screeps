@@ -1,4 +1,5 @@
 let tasks = require('tasks');
+let roomManagerEnergySources = require('room_manager_energy_sources');
 
 module.exports = {
     HARVEST_STYLE: {
@@ -33,7 +34,7 @@ module.exports = {
                 let target = creep.memory.task.target;
                     creep.moveTo(target, {visualizePathStyle: module.exports.BUILD_STYLE});
             } else {
-                let sources = creep.room.find(FIND_SOURCES);
+                let source = roomManagerEnergySources.find
                 if(creep.harvest(sources[0]) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(sources[0], {visualizePathStyle: module.exports.HARVEST_STYLE});
                 }

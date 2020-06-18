@@ -20,8 +20,7 @@ module.exports = {
         creepControllerWorker.manageWorkers(room, harvester);
 
         for (let key in creeps) {
-            let creep = creeps[key];
-            creepTaskManager.run(creep);
+            creepTaskManager.run(creeps[key], room);
         }
     },
 };
