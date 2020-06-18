@@ -1,13 +1,15 @@
-let creepTaskHarvester = require('general/creep_task_harvest');
+let tasks = require('tasks');
+let creepTaskHarvest = require('general/creep_task_harvest');
+let creepTaskBuild = require('creep_task_build')
 
 module.exports = {
     run(creep) {
         switch (creep.memory.task.type) {
-            case 'build' :
-                console.log('build stuff');
+            case tasks.TASK_BUILD :
+                creepTaskBuild.run(creep);
                 break
-            case 'harvest':
-                creepTaskHarvester.run(creep);
+            case tasks.TASK_HARVEST:
+                creepTaskHarvest.run(creep);
             default:
                 return;
         }

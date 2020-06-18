@@ -5,7 +5,7 @@ module.exports = {
     manageWorkers(room, creeps) {
         let remainingCreeps = creeps;
         remainingCreeps = module.exports.manageBuilder(room, remainingCreeps);
-        module.exports.manageHarvester(room, remainingCreeps);
+        remainingCreeps = module.exports.manageHarvester(room, remainingCreeps);
     },
     manageBuilder(room, creeps) {
         let remainingCreeps = creeps;
