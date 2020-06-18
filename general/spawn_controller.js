@@ -1,14 +1,17 @@
-let helper = require('helper')
+let helper = require('helper');
+let roles = require('roles');
 
 module.exports = {
-    MAX_NUMBER: 8,
+    MAX_NUMBER_WORKERS: 8,
     run(room) {
-        for (let key in Game.spawns) {
-            const spawn = Game.spawns[key];
+        let spawns = room.find(FIND_MY_SPAWNS);
+        for (let key in spawns) {
+            const spawn = spawns[key];
+
             if (spawn.store[RESOURCE_ENERGY] > 100) {
                 if (helper.countObjectProps(Game.creeps) < module.exports.MAX_NUMBER) {
                     spawn.spawnCreep([WORK, CARRY, MOVE], 'creep' + Game.time, {
-                        memory: {role: 'harvester'}
+                        memory: {role: roles.ROLE_WORKER}
                     });
                 }
             }
