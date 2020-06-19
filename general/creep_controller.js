@@ -5,24 +5,24 @@ let creepControllerWorker = require('creep_controller_worker')
 module.exports = {
     run(room) {
         let creeps = room.find(FIND_MY_CREEPS);
-        let harvester = [];
+        let worker = [];
         for (let key in creeps) {
             let creep = creeps[key];
             switch (creep.memory.role) {
                 case roles.ROLE_WORKER :
-                    harvester.push(creep);
+                    worker.push(creep);
                     break
                 default:
                     return;
             }
         }
 
-        if (harvester.length > 0) {
-            creepControllerWorker.manageWorkers(room, harvester);
+        if (worker.length > 0) {
+            creepControllerWorker.manageWorkers(room, worker);
         }
 
         for (let key in creeps) {
-            creepTaskManager.run(creeps[key], room);
+            creepTaskManager.run(room, creeps[key]);
         }
-    },
+    }
 };

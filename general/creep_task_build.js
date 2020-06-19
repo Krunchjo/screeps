@@ -16,7 +16,7 @@ module.exports = {
         strokeWidth: .15,
         opacity: .1
     },
-    run(creep) {
+    run(room, creep) {
         if (    creep.memory.task !== undefined
              && creep.memory.task.type === tasks.TASK_BUILD
         ) {
@@ -34,9 +34,9 @@ module.exports = {
                 let target = creep.memory.task.target;
                     creep.moveTo(target, {visualizePathStyle: module.exports.BUILD_STYLE});
             } else {
-                let source = roomManagerEnergySources.find
-                if(creep.harvest(sources[0]) == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(sources[0], {visualizePathStyle: module.exports.HARVEST_STYLE});
+                let source = roomManagerEnergySources.findEnergy(room);
+                if(creep.harvest(source) == ERR_NOT_IN_RANGE) {
+                    creep.moveTo(source, {visualizePathStyle: module.exports.HARVEST_STYLE});
                 }
             }
         }

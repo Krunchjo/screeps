@@ -3,8 +3,8 @@ module.exports = {
         let sources = room.find(FIND_SOURCES);
         if (sources.length > 0) {
            for (let key in sources) {
-               let source = sources[0]
-               source.memory = {}
+               let source = sources[key];
+               source.memory = {};
            }
         }
     },
@@ -14,8 +14,10 @@ module.exports = {
         if (sources.length > 0) {
             for (let key in sources) {
                 let source = sources[key];
-                if (source.memory.creepCounter === undefined) {
-                    source.memory.creepCounter = 1;
+                if (!source.memory.creepCounter) {
+                    source.memory = {
+                        creepCounter: 1
+                    };
                     return source;
                 }
 

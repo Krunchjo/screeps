@@ -2,9 +2,11 @@ let tasks = require('tasks');
 
 module.exports = {
     manageWorkers(room, creeps) {
-        let remainingCreeps = creeps;
-        remainingCreeps = module.exports.manageBuilder(room, remainingCreeps);
-        remainingCreeps = module.exports.manageHarvester(room, remainingCreeps);
+        creeps.forEach((creep) => {
+            module.exports.clearTaskMemory(creep);
+        })
+        module.exports.manageBuilder(room, creeps);
+        module.exports.manageHarvester(room, creeps);
     },
     manageBuilder(room, creeps) {
         let remainingCreeps = creeps;
@@ -14,33 +16,39 @@ module.exports = {
             for (let key in buildingTargets) {
                 let target = buildingTargets[key];
                 let neededBuilders = 1;
-                let targetBuilder = remainingCreeps.slice(0, neededBuilders);
-                remainingCreeps = remainingCreeps.slice(neededBuilders + 1, remainingCreeps.length);
-
-                for (let key in targetBuilder) {
-                    let currentTargetBuilder = targetBuilder[key];
-                    currentTargetBuilder.memory.task = {
-                        type: tasks.TASK_BUILD,
-                        target: target
+                let counter = 0;
+                creeps.forEach((creep) => {
+                    if (
+                        !creep.memory.task
+                        && counter <= neededBuilders
+                    ) {
+                        creep.memory.task = {
+                            type: tasks.TASK_BUILD,
+                            target: target
+                        }
+                        counter++;
                     }
-                }
+                })
             }
         }
         return remainingCreeps;
     },
     manageHarvester(room, creeps) {
-        let remainingCreeps = creeps;
         let numberOfHarvester = 2;
-
-        let harvesters = remainingCreeps.slice(0, numberOfHarvester);
-        remainingCreeps = remainingCreeps.slice(numberOfHarvester + 1, remainingCreeps.length);
-
-        for (let key in harvesters) {
-            let harvester = harvesters[key];
-            harvester.memory.task = {
-                type: tasks.TASK_HARVEST
+        let counter = 0;
+        creeps.forEach((creep) => {
+            if (
+                !creep.memory.task
+                && counter <= numberOfHarvester
+            ) {
+                creep.memory.task = {
+                    type: tasks.TASK_HARVEST
+                }
+                counter++;
             }
-        }
-        return remainingCreeps;
+        })
+    },
+    clearTaskMemory(creep) {
+        creep.memory.task = null;
     }
 }
