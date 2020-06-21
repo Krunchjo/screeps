@@ -1,20 +1,11 @@
 module.exports = {
-    manageRoomEnergy(room) {
-        let sources = room.find(FIND_SOURCES);
-        if (sources.length > 0) {
-           for (let key in sources) {
-               let source = sources[key];
-               source.memory = {};
-           }
-        }
-    },
     findEnergy(room) {
         let sources = room.find(FIND_SOURCES);
         let sourceWithLessCreeps = null;
         if (sources.length > 0) {
             for (let key in sources) {
                 let source = sources[key];
-                if (!source.memory.creepCounter) {
+                if (!source.memory) {
                     source.memory = {
                         creepCounter: 1
                     };

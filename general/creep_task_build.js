@@ -21,23 +21,30 @@ module.exports = {
              && creep.memory.task.type === tasks.TASK_BUILD
         ) {
             creep.say(creep.memory.task.type);
-            if(creep.memory.building && creep.store[RESOURCE_ENERGY] == 0) {
-                creep.memory.building = false;
+            if(creep.memory.collecting === 'undefined') {
+                creep.memory.collecting = true;
             }
 
-            if(!creep.memory.building && creep.store.getFreeCapacity() == 0) {
-                creep.memory.building = true;
+            if(!creep.memory.collecting && creep.store.getFreeCapacity() === 0) {
+                creep.memory.collecting = false;
             }
 
-            if (creep.memory.building) {
+            if (creep.memory.collecting) {
+                if (!creep.memory.sourceId) {
+                    let source = roomManagerEnergySources.findEnergy(room);
+                    creep.memory.sourceId = source.id;
+                }
+                let source = Game.getObjectById(creep.memory.sourceId);
+                if(creep.harvest(source) == ERR_NOT_IN_RANGE) {
+                    creep.moveTo(source, {visualizePathStyle: module.exports.HARVEST_STYLE});
+                }
+            } else {
                 let target = creep.memory.task.target;
                 if(creep.build(target) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(target, {visualizePathStyle: module.exports.BUILD_STYLE});
                 }
-            } else {
-                let source = roomManagerEnergySources.findEnergy(room);
-                if(creep.harvest(source) == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(source, {visualizePathStyle: module.exports.HARVEST_STYLE});
+                if (creep.store[RESOURCE_ENERGY] === 0) {
+                    creep.memory.collecting = true;
                 }
             }
         }
