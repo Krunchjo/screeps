@@ -26,7 +26,7 @@ module.exports = {
                 creep.memory.collecting = true;
             }
 
-            if (!creep.memory.collecting && creep.store.getFreeCapacity() === 0) {
+            if (creep.memory.collecting && creep.store.getFreeCapacity() === 0) {
                 creep.memory.collecting = false;
             }
             if (creep.memory.collecting) {
