@@ -1,8 +1,11 @@
 let creepController = require('creep_controller');
 let spawnController = require('spawn_controller');
-let roomManagerEnergySource = require('room_manager_energy_sources');
+let helper = require('helper');
+
+
 
 module.exports.loop = function () {
+    // helper.clearCache();
     for (let room in Game.rooms) {
         creepController.run(Game.rooms[room]);
         spawnController.run(Game.rooms[room]);
