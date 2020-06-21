@@ -17,11 +17,10 @@ module.exports = {
         opacity: .2
     },
     run(room, creep) {
-        creep.say('🔄 harvester');
         if (    creep.memory.task !== null
              && creep.memory.task.type === tasks.TASK_UPGRADE
         ) {
-
+            creep.say(creep.memory.task.type);
             if(creep.store[RESOURCE_ENERGY] === 0) {
                 let source = roomManagerEnergySource.findEnergy(room);
                 if(creep.harvest(source) === ERR_NOT_IN_RANGE) {

@@ -4,10 +4,15 @@ module.exports = {
     manageWorkers(room, creeps) {
         creeps.forEach((creep) => {
             module.exports.clearTaskMemory(creep);
-        })
-        module.exports.manageBuilder(room, creeps);
-        module.exports.manageUpgrader(room, creeps);
-        module.exports.manageHarvester(room, creeps);
+        });
+        if (creeps.length < 5) {
+            module.exports.manageHarvester(room, creeps);
+        } else {
+            module.exports.manageBuilder(room, creeps);
+            module.exports.manageUpgrader(room, creeps);
+            module.exports.manageHarvester(room, creeps);
+        }
+
     },
     manageBuilder(room, creeps) {
         let remainingCreeps = creeps;

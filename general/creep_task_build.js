@@ -17,10 +17,10 @@ module.exports = {
         opacity: .1
     },
     run(room, creep) {
-        creep.say('🚧 builder')
         if (    creep.memory.task !== undefined
              && creep.memory.task.type === tasks.TASK_BUILD
         ) {
+            creep.say(creep.memory.task.type);
             if(creep.memory.building && creep.store[RESOURCE_ENERGY] == 0) {
                 creep.memory.building = false;
             }
