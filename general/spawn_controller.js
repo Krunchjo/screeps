@@ -2,7 +2,7 @@ let helper = require('helper');
 let roles = require('roles');
 
 module.exports = {
-    MAX_NUMBER_WORKERS: 8,
+    MAX_NUMBER_WORKERS: 20,
     run(room) {
         let spawns = room.find(FIND_MY_SPAWNS);
         for (let key in spawns) {

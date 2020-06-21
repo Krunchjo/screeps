@@ -30,6 +30,7 @@ module.exports = {
                 }
             }
         }
+        sourceWithLessCreeps.memory.creepCounter++;
         return sourceWithLessCreeps;
     }
 }

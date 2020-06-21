@@ -6,6 +6,7 @@ module.exports = {
             module.exports.clearTaskMemory(creep);
         })
         module.exports.manageBuilder(room, creeps);
+        module.exports.manageUpgrader(room, creeps);
         module.exports.manageHarvester(room, creeps);
     },
     manageBuilder(room, creeps) {
@@ -20,7 +21,7 @@ module.exports = {
                 creeps.forEach((creep) => {
                     if (
                         !creep.memory.task
-                        && counter <= neededBuilders
+                        && counter < neededBuilders
                     ) {
                         creep.memory.task = {
                             type: tasks.TASK_BUILD,
@@ -34,15 +35,26 @@ module.exports = {
         return remainingCreeps;
     },
     manageHarvester(room, creeps) {
-        let numberOfHarvester = 2;
+        creeps.forEach((creep) => {
+            if (
+                !creep.memory.task
+            ) {
+                creep.memory.task = {
+                    type: tasks.TASK_HARVEST
+                }
+            }
+        })
+    },
+    manageUpgrader(room, creeps) {
+        let numberOfUpgrader = 2;
         let counter = 0;
         creeps.forEach((creep) => {
             if (
                 !creep.memory.task
-                && counter <= numberOfHarvester
+                && counter < numberOfUpgrader
             ) {
                 creep.memory.task = {
-                    type: tasks.TASK_HARVEST
+                    type: tasks.TASK_UPGRADE
                 }
                 counter++;
             }
