@@ -1,27 +1,46 @@
 module.exports = {
     findEnergy(room) {
         let sources = room.find(FIND_SOURCES);
-        let sourceWithLessCreeps = null;
-        if (sources.length > 0) {
-            for (let key in sources) {
-                let source = sources[key];
-                if (!source.memory) {
-                    source.memory = {
-                        creepCounter: 1
-                    };
-                    return source;
-                }
+        if (sources.length <= 0) {
+            return null;
+        }
 
-                if (!sourceWithLessCreeps) {
-                    sourceWithLessCreeps = source;
-                }
+        let creeps = room.find(FIND_CREEPS);
+        let creepsOnResources = [];
 
-                if (sourceWithLessCreeps.memory.creepCounter > source.memory.creepCounter) {
-                    sourceWithLessCreeps = source;
+        for (let key in creeps) {
+            let creep = creeps[key];
+            if (creep.memory && creep.memory.sourceId) {
+                let sourceId = creep.memory.sourceId;
+                if (creepsOnResources[sourceId]) {
+                    let value = creepsOnResources[sourceId];
+                    value += 1;
+                    creepsOnResources[sourceId] = value;
+                } else {
+                    creepsOnResources[sourceId] = 1;
                 }
             }
         }
-        sourceWithLessCreeps.memory.creepCounter++;
-        return sourceWithLessCreeps;
+
+        let leastCreepResource = null;
+
+        for (let key in sources) {
+            let source = sources[key];
+
+            if (!creepsOnResources[source.id]) {
+                leastCreepResource = source;
+                break;
+            }
+
+            if (!leastCreepResource) {
+                leastCreepResource = source;
+            }
+
+            if (creepsOnResources[source.id] <= creepsOnResources[leastCreepResource.id]) {
+                leastCreepResource = source;
+            }
+        }
+
+        return Game.getObjectById(leastCreepResource.id);
     }
 }

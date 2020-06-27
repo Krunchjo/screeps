@@ -38,5 +38,25 @@ module.exports = {
                 source.memory = {};
             }
         }
+    },
+    debugMemory() {
+        for (let key in Game.rooms) {
+            let room = Game.rooms[key];
+            let spawns = room.find(FIND_MY_SPAWNS);
+            for (let key in spawns) {
+                let spawn = spawns[key];
+                console.log('SPAWN ID: ' + spawn.id + ' Memory: ' + JSON.stringify(spawn.memory));
+            }
+            let creeps = room.find(FIND_MY_CREEPS);
+            for (let key in creeps) {
+                let creep = creeps[key];
+                console.log('CREEP ID: ' + creep.id + ' Memory: ' + JSON.stringify(creep.memory));
+            }
+            let sources = room.find(FIND_SOURCES);
+            for (let key in sources) {
+                let source = sources[key]
+                console.log('SOURCE ID: ' + source.id + ' Memory: ' + JSON.stringify(source.memory));
+            }
+        }
     }
 }
